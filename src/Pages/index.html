@@ -1,0 +1,1769 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pagina</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@600;700&display=swap');
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #2a2a2a;
+        }
+
+        .carousel-intro {
+            margin: 30px auto 10px;
+            max-width: 1200px;
+            padding: 0 20px;
+            text-align: center;
+            color: #ffffff;
+            font-family: 'Poppins', Arial, sans-serif;
+            font-weight: 700;
+            font-size: 28px;
+            letter-spacing: 0.4px;
+        }
+
+        /* Navbar con gradiente viola-arancione */
+        nav {
+            background: linear-gradient(90deg, #7c3aed, #ff8c42);
+            padding: 20px 40px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+        }
+
+        .nav-menu-btn {
+            width: 36px;
+            height: 36px;
+            border: none;
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+        }
+
+        .nav-menu-btn span {
+            display: block;
+            width: 18px;
+            height: 2px;
+            background: #ffffff;
+            border-radius: 2px;
+            position: relative;
+        }
+
+        .nav-menu-btn span::before,
+        .nav-menu-btn span::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            width: 18px;
+            height: 2px;
+            background: #ffffff;
+            border-radius: 2px;
+        }
+
+        .nav-menu-btn span::before {
+            top: -6px;
+        }
+
+        .nav-menu-btn span::after {
+            top: 6px;
+        }
+
+        .nav-content {
+            display: grid;
+            grid-template-columns: 1fr auto 1fr;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .nav-left {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            gap: 30px;
+        }
+
+        .nav-search {
+            display: flex;
+            justify-content: center;
+        }
+
+        .nav-spacer {
+            display: block;
+        }
+
+        .nav-search input {
+            width: min(520px, 100%);
+            padding: 10px 14px;
+            border-radius: 999px;
+            border: none;
+            outline: none;
+            font-size: 14px;
+            background-color: rgba(255, 255, 255, 0.9);
+        }
+
+        .nav-search input::placeholder {
+            color: #666;
+        }
+
+        .side-menu-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.5);
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+            z-index: 1000;
+        }
+
+        .side-menu-overlay.open {
+            opacity: 1;
+            pointer-events: all;
+        }
+
+        .side-menu {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 280px;
+            height: 100vh;
+            background: #1f1f1f;
+            box-shadow: 6px 0 18px rgba(0, 0, 0, 0.35);
+            transform: translateX(-100%);
+            transition: transform 0.3s ease;
+            z-index: 1001;
+            display: flex;
+            flex-direction: column;
+            padding: 24px 20px;
+            gap: 16px;
+        }
+
+        .side-menu.open {
+            transform: translateX(0);
+        }
+
+        .side-menu-title {
+            color: #ffffff;
+            font-weight: 700;
+            font-size: 18px;
+        }
+
+        .side-menu-subtitle {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 13px;
+            margin-top: -6px;
+            margin-bottom: 8px;
+        }
+
+        .side-menu a {
+            color: #ffffff;
+            text-decoration: none;
+            padding: 10px 12px;
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.04);
+            font-size: 14px;
+            opacity: 0.8;
+            transition: background 0.2s ease;
+        }
+
+        .side-menu a:hover {
+            background: rgba(255, 255, 255, 0.14);
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 16px;
+            transition: 0.3s;
+        }
+
+        nav a:hover {
+            opacity: 0.8;
+        }
+
+        /* Container principale */
+        .container {
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+
+        /* Griglia di card */
+        .cards-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 30px;
+        }
+
+        /* Card in grigio antracite */
+        .card {
+            background-color: #3a3a3a;
+            border-radius: 10px;
+            padding: 0;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4);
+            transition: transform 0.3s, box-shadow 0.3s;
+            overflow: hidden;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
+        }
+
+        .card-header {
+            padding: 30px;
+            cursor: pointer;
+            user-select: none;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: background-color 0.3s ease;
+        }
+
+        .card-header:hover {
+            background-color: #2a2a2a;
+        }
+
+        .card-title-section h3 {
+            color: #ffffff;
+            margin-bottom: 15px;
+            font-size: 18px;
+        }
+
+        .card-title-section p {
+            color: #b0b0b0;
+            line-height: 1.6;
+            font-size: 14px;
+        }
+
+        .card-toggle {
+            font-size: 0;
+            color: #ff8c42;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .card-toggle::after {
+            content: "▼";
+            font-size: 20px;
+            transition: transform 0.3s ease;
+            color: #ff8c42;
+        }
+
+        .card-toggle.active::after {
+            transform: rotate(180deg);
+        }
+
+        .card-content {
+            background-color: #2a2a2a;
+            padding: 0;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease, padding 0.4s ease;
+        }
+
+        .card-content.active {
+            padding: 25px;
+            max-height: 1200px;
+            overflow: hidden;
+        }
+
+        /* Separazione dei container dai bordi della card */
+        .processors-container,
+        .content-container {
+            margin: 0;
+        }
+
+        .card-list {
+            list-style: none;
+            padding-left: 0;
+            margin: 0;
+        }
+
+        .card-list li {
+            color: #b0b0b0;
+            padding: 10px 0;
+            border-bottom: 1px solid #1a1a1a;
+            height: auto;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            line-height: 1.4;
+            font-size: 14px;
+        }
+
+        .card-list li:last-child {
+            border-bottom: none;
+        }
+
+        .card-list li:before {
+            content: "▸ ";
+            color: #ff8c42;
+            margin-right: 8px;
+            flex-shrink: 0;
+        }
+
+        /* Contenitore principale con carrello */
+        .build-content-wrapper {
+            display: flex;
+            gap: 20px;
+        }
+
+        .build-cards-section {
+            flex: 1;
+        }
+
+        /* Carrello laterale */
+        .cart-sidebar {
+            width: 320px;
+            background-color: #1a1a1a;
+            border-radius: 15px;
+            padding: 20px;
+            height: fit-content;
+            position: sticky;
+            top: 20px;
+            border: 2px solid #3a3a3a;
+        }
+
+        .cart-title {
+            color: #ff8c42;
+            font-size: 20px;
+            font-weight: bold;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .cart-items {
+            background-color: #0f0f0f;
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 15px;
+            max-height: 300px;
+            overflow-y: auto;
+            min-height: 100px;
+        }
+
+        .cart-item {
+            background-color: #2a2a2a;
+            padding: 10px;
+            margin-bottom: 8px;
+            border-radius: 5px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: #b0b0b0;
+            font-size: 12px;
+        }
+
+        .cart-item-name {
+            flex: 1;
+            margin-right: 10px;
+        }
+
+        .cart-item-price {
+            color: #ff8c42;
+            font-weight: bold;
+            margin-right: 8px;
+        }
+
+        .cart-item-remove {
+            background-color: #c0392b;
+            color: white;
+            border: none;
+            border-radius: 3px;
+            padding: 2px 6px;
+            cursor: pointer;
+            font-size: 11px;
+            transition: background-color 0.3s;
+        }
+
+        .cart-item-remove:hover {
+            background-color: #a93226;
+        }
+
+        .cart-empty {
+            color: #666;
+            text-align: center;
+            padding: 20px 0;
+        }
+
+        .cart-prices {
+            background-color: #0f0f0f;
+            border-radius: 10px;
+            padding: 15px;
+            border-top: 2px solid #3a3a3a;
+        }
+
+        .price-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            color: #b0b0b0;
+        }
+
+        .price-row.total {
+            border-top: 2px solid #3a3a3a;
+            padding-top: 10px;
+            margin-bottom: 10px;
+        }
+
+        .price-row.total span:last-child {
+            color: #ff8c42;
+            font-weight: bold;
+            font-size: 16px;
+        }
+
+        .price-row.vat span:last-child {
+            color: #27ae60;
+            font-weight: bold;
+            font-size: 16px;
+        }
+
+        /* Lista di componenti con pulsanti */
+        .card-list-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 10px;
+            color: #b0b0b0;
+            padding: 10px 0;
+            border-bottom: 1px solid #1a1a1a;
+        }
+
+        .card-list-item:last-child {
+            border-bottom: none;
+        }
+
+        .component-name {
+            flex: 1;
+            min-width: 0;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .component-name:before {
+            content: none;
+        }
+
+        .component-price {
+            display: none;
+        }
+
+        .add-to-cart-btn {
+            background: linear-gradient(90deg, #5a2d9a, #cc6b2c);
+            color: white;
+            border: none;
+            padding: 6px 12px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 12px;
+            font-weight: bold;
+            transition: all 0.3s;
+        }
+
+        .add-to-cart-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Layout a due colonne per i processori */
+        .processors-container {
+            display: flex;
+            gap: 20px;
+            width: 100%;
+        }
+
+        .processors-column {
+            flex: 1;
+            max-height: 800px;
+            overflow-y: auto;
+            background-color: #1a1a1a;
+            border-radius: 10px;
+            padding: 15px;
+        }
+
+        .processors-column h4 {
+            color: #ff8c42;
+            margin-top: 16px;
+            margin-bottom: 12px;
+            font-size: 14px;
+        }
+
+        .processors-column h4:first-child {
+            margin-top: 0;
+        }
+
+        /* Layout generico a due colonne per tutte le card */
+        .content-container {
+            display: flex;
+            gap: 20px;
+            width: 100%;
+        }
+
+        .content-column {
+            flex: 1;
+            max-height: 800px;
+            overflow-y: auto;
+            background-color: #1a1a1a;
+            border-radius: 10px;
+            padding: 15px;
+        }
+
+        .content-column h4 {
+            color: #ff8c42;
+            margin-top: 16px;
+            margin-bottom: 12px;
+            font-size: 14px;
+        }
+
+        .content-column h4:first-child {
+            margin-top: 0;
+        }
+
+        /* Personalizzazione scrollbar */
+        .processors-column::-webkit-scrollbar {
+            width: 10px;
+        }
+
+        .processors-column::-webkit-scrollbar-track {
+            background: #1a1a1a;
+            border-radius: 15px;
+        }
+
+        .processors-column::-webkit-scrollbar-thumb {
+            background: #3a3a3a;
+            border-radius: 15px;
+        }
+
+        .processors-column::-webkit-scrollbar-thumb:hover {
+            background: #5a5a5a;
+        }
+
+        /* Firefox scrollbar */
+        .processors-column {
+            scrollbar-width: thin;
+            scrollbar-color: #3a3a3a #1a1a1a;
+        }
+
+        .content-column::-webkit-scrollbar {
+            width: 10px;
+        }
+
+        .content-column::-webkit-scrollbar-track {
+            background: #1a1a1a;
+            border-radius: 15px;
+        }
+
+        .content-column::-webkit-scrollbar-thumb {
+            background: #3a3a3a;
+            border-radius: 15px;
+        }
+
+        .content-column::-webkit-scrollbar-thumb:hover {
+            background: #5a5a5a;
+        }
+
+        .content-column {
+            scrollbar-width: thin;
+            scrollbar-color: #3a3a3a #1a1a1a;
+        }
+
+        /* Sezione Carousel Immagini */
+        .carousel-section {
+            margin: 40px auto;
+            max-width: 1200px;
+            padding: 0 20px;
+        }
+
+        .carousel-container {
+            position: relative;
+            width: 100%;
+            height: 400px;
+            border-radius: 25px;
+            overflow: hidden;
+            background-color: #1a1a1a;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+        }
+
+        .carousel-slide {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            transition: opacity 1s ease-in-out;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .carousel-slide.active {
+            opacity: 1;
+        }
+
+        .carousel-slide img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .carousel-slide img.contain {
+            object-fit: contain;
+            background-color: #111;
+        }
+
+        .carousel-dots {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 10px;
+            z-index: 10;
+        }
+
+        .carousel-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.3);
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .carousel-dot::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 100%;
+            width: 0%;
+            background-color: rgba(255, 255, 255, 1);
+            border-radius: 50%;
+            transition: none;
+        }
+
+        .carousel-dot.filling::before {
+            animation: fillDot 10s linear forwards;
+        }
+
+        @keyframes fillDot {
+            0% {
+                width: 0%;
+            }
+            100% {
+                width: 100%;
+            }
+        }
+
+        /* Sezione Build Your Computer */
+        .build-section {
+            margin: 40px auto;
+            max-width: 1200px;
+            padding: 0 20px;
+        }
+
+        .build-header {
+            background: linear-gradient(90deg, #5a2d9a, #cc6b2c);
+            color: white;
+            padding: 20px 30px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 24px;
+            font-weight: bold;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            user-select: none;
+            transition: all 0.3s ease;
+        }
+
+        .build-header:hover {
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+        }
+
+        .toggle-icon {
+            font-size: 28px;
+            transition: transform 0.3s ease;
+        }
+
+        .toggle-icon.active {
+            transform: rotate(180deg);
+        }
+
+        .build-content {
+            background-color: #242424;
+            border-radius: 25px;
+            padding: 0;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease, padding 0.5s ease;
+        }
+
+        .build-content.active {
+            padding: 40px 30px;
+            max-height: 2000px;
+        }
+
+        .offers-section {
+            margin: 50px auto 60px;
+            max-width: 1200px;
+            padding: 0 20px;
+        }
+
+        .offers-title {
+            color: #ffffff;
+            font-size: 26px;
+            margin-bottom: 20px;
+        }
+
+        .offers-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 24px;
+        }
+
+        .offer-card {
+            background: #2f2f2f;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.35);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .offer-image {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+            background: #111;
+        }
+
+        .offer-body {
+            padding: 16px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .offer-title {
+            color: #ffffff;
+            font-size: 18px;
+        }
+
+        .offer-price {
+            color: #ff8c42;
+            font-weight: 700;
+            font-size: 20px;
+        }
+
+        .offer-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            color: #cfcfcf;
+            font-size: 14px;
+            display: grid;
+            gap: 6px;
+        }
+
+        /* Sezione Acquista singolarmente */
+        .single-buy-section {
+            max-width: 1200px;
+            margin: 40px auto 80px;
+            padding: 0 20px;
+        }
+
+        .single-buy-title {
+            color: #ffffff;
+            font-size: 26px;
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 20px;
+            font-family: 'Poppins', Arial, sans-serif;
+            letter-spacing: 0.4px;
+        }
+
+        .single-buy-groups {
+            display: grid;
+            gap: 24px;
+        }
+
+        .single-buy-group {
+            background-color: #181818;
+            border-radius: 16px;
+            padding: 18px;
+            border: 1px solid #2e2e2e;
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.35);
+        }
+
+        .single-buy-group-title {
+            color: #ffffff;
+            font-size: 20px;
+            margin-bottom: 14px;
+            font-weight: 700;
+        }
+
+        .single-buy-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 18px;
+        }
+
+        .single-buy-card {
+            background-color: #1f1f1f;
+            border-radius: 12px;
+            padding: 18px;
+            border: 1px solid #2e2e2e;
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.35);
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .single-buy-image {
+            width: 100%;
+            height: 140px;
+            object-fit: cover;
+            border-radius: 10px;
+            background: #0f0f0f;
+        }
+
+        .single-buy-card h3 {
+            color: #ff8c42;
+            font-size: 16px;
+            margin: 0;
+        }
+
+        .single-buy-card p {
+            color: #cfcfcf;
+            font-size: 13px;
+            line-height: 1.5;
+            margin: 0;
+        }
+
+        .single-buy-specs {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: grid;
+            gap: 6px;
+            color: #bdbdbd;
+            font-size: 12px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav>
+        <div class="nav-content">
+            <div class="nav-left">
+                <button class="nav-menu-btn" id="navMenuBtn" aria-label="Apri menu">
+                    <span></span>
+                </button>
+                <ul>
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#servizi">Servizi</a></li>
+                    <li><a href="#chi-siamo">Chi Siamo</a></li>
+                    <li><a href="#contatti">Contatti</a></li>
+                </ul>
+            </div>
+            <div class="nav-search">
+                <input type="search" id="navSearch" placeholder="Cerca prodotti e componenti...">
+            </div>
+            <div class="nav-spacer"></div>
+        </div>
+    </nav>
+
+    <div class="side-menu-overlay" id="sideMenuOverlay"></div>
+    <aside class="side-menu" id="sideMenu" aria-label="Menu di navigazione">
+        <div class="side-menu-title">Menu</div>
+        <div class="side-menu-subtitle">Naviga tra le sezioni della pagina</div>
+        <a href="#home">Home</a>
+        <a href="#servizi">Servizi</a>
+        <a href="#chi-siamo">Chi Siamo</a>
+        <a href="#contatti">Contatti</a>
+    </aside>
+
+    <div class="carousel-intro">Da 20 anni offriamo soluzioni all'avanguardia per ogni necessità!</div>
+
+    <!-- Carousel Immagini -->
+    <div class="carousel-section">
+        <div class="carousel-container">
+            <div class="carousel-slide active">
+                <img src="../Images/high_build.jpg" alt="High Build Computer" class="contain">
+            </div>
+            <div class="carousel-slide">
+                <img src="../Images/MB.jpg" alt="Mid Build Computer">
+            </div>
+            <div class="carousel-slide">
+                <img src="../Images/K.jpg" alt="Low Build Computer">
+            </div>
+            <div class="carousel-dots">
+                <span class="carousel-dot active" onclick="goToSlide(0)"></span>
+                <span class="carousel-dot" onclick="goToSlide(1)"></span>
+                <span class="carousel-dot" onclick="goToSlide(2)"></span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Sezione Build Your Computer -->
+    <div class="build-section">
+        <div class="build-header" id="buildHeader">
+            <span>Build Your Computer</span>
+            <span class="toggle-icon" id="toggleIcon">▼</span>
+        </div>
+        <div class="build-content" id="buildContent">
+            <div class="build-content-wrapper">
+                <div class="build-cards-section">
+                    <div class="cards-grid">
+                <!-- PROCESSORS CARD -->
+                <div class="card" data-component="processors">
+                    <div class="card-header" onclick="toggleCard(event)">
+                        <div class="card-title-section">
+                            <h3>Processors</h3>
+                            <p>Processori Intel e AMD</p>
+                        </div>
+                        <span class="card-toggle">▼</span>
+                    </div>
+                    <div class="card-content">
+                        <div class="processors-container">
+                            <!-- COLONNA INTEL -->
+                            <div class="processors-column">
+                                <h4>Intel - 10a Generazione</h4>
+                        <ul class="card-list">
+                            <li>Intel Core i3 10100 - €119</li>
+                            <li>Intel Core i3 10100F - €89</li>
+                            <li>Intel Core i3 10320 - €149</li>
+                            <li>Intel Core i5 10400 - €239</li>
+                            <li>Intel Core i5 10400F - €209</li>
+                            <li>Intel Core i5 10500 - €259</li>
+                            <li>Intel Core i5 10600 - €279</li>
+                            <li>Intel Core i5 10600K - €319</li>
+                            <li>Intel Core i7 10700 - €419</li>
+                            <li>Intel Core i7 10700K - €489</li>
+                            <li>Intel Core i7 10700KF - €459</li>
+                            <li>Intel Core i9 10900 - €549</li>
+                            <li>Intel Core i9 10900K - €599</li>
+                            <li>Intel Core i9 10900KS - €699</li>
+                        </ul>
+                        <h4>Intel - 11a Generazione</h4>
+                        <ul class="card-list">
+                            <li>Intel Core i3 11100 - €129</li>
+                            <li>Intel Core i3 11100F - €99</li>
+                            <li>Intel Core i5 11400 - €249</li>
+                            <li>Intel Core i5 11400F - €219</li>
+                            <li>Intel Core i5 11500 - €269</li>
+                            <li>Intel Core i5 11600 - €289</li>
+                            <li>Intel Core i5 11600K - €329</li>
+                            <li>Intel Core i7 11700 - €459</li>
+                            <li>Intel Core i7 11700K - €509</li>
+                            <li>Intel Core i7 11700KF - €479</li>
+                            <li>Intel Core i9 11900 - €579</li>
+                            <li>Intel Core i9 11900K - €649</li>
+                            <li>Intel Core i9 11900KS - €749</li>
+                        </ul>
+                        <h4>Intel - 12a Generazione</h4>
+                        <ul class="card-list">
+                            <li>Intel Core i3 12100 - €129</li>
+                            <li>Intel Core i3 12100F - €99</li>
+                            <li>Intel Core i5 12400 - €259</li>
+                            <li>Intel Core i5 12400F - €229</li>
+                            <li>Intel Core i5 12600 - €299</li>
+                            <li>Intel Core i5 12600K - €349</li>
+                            <li>Intel Core i7 12700 - €469</li>
+                            <li>Intel Core i7 12700K - €519</li>
+                            <li>Intel Core i7 12700KF - €489</li>
+                            <li>Intel Core i9 12900 - €629</li>
+                            <li>Intel Core i9 12900K - €699</li>
+                            <li>Intel Core i9 12900KS - €749</li>
+                        </ul>
+                        <h4>Intel - 13a Generazione</h4>
+                        <ul class="card-list">
+                            <li>Intel Core i3 13100 - €139</li>
+                            <li>Intel Core i3 13100F - €109</li>
+                            <li>Intel Core i5 13400 - €269</li>
+                            <li>Intel Core i5 13400F - €239</li>
+                            <li>Intel Core i5 13600 - €309</li>
+                            <li>Intel Core i5 13600K - €359</li>
+                            <li>Intel Core i7 13700 - €479</li>
+                            <li>Intel Core i7 13700K - €529</li>
+                            <li>Intel Core i7 13700KF - €499</li>
+                            <li>Intel Core i9 13900 - €649</li>
+                            <li>Intel Core i9 13900K - €719</li>
+                            <li>Intel Core i9 13900KS - €799</li>
+                        </ul>
+                        <h4>Intel - 14a Generazione</h4>
+                        <ul class="card-list">
+                            <li>Intel Core i5 14400 - €279</li>
+                            <li>Intel Core i5 14400F - €249</li>
+                            <li>Intel Core i5 14600K - €369</li>
+                            <li>Intel Core i7 14700 - €489</li>
+                            <li>Intel Core i7 14700K - €539</li>
+                            <li>Intel Core i7 14700KF - €509</li>
+                            <li>Intel Core i9 14900 - €669</li>
+                            <li>Intel Core i9 14900K - €739</li>
+                            <li>Intel Core i9 14900KS - €819</li>
+                        </ul>
+                            </div>
+                            <!-- COLONNA AMD -->
+                            <div class="processors-column">
+                                <h4>AMD Ryzen - Serie 5000</h4>
+                        <ul class="card-list">
+                            <li>AMD Ryzen 3 5100 - €109</li>
+                            <li>AMD Ryzen 5 5500 - €159</li>
+                            <li>AMD Ryzen 5 5600G - €219</li>
+                            <li>AMD Ryzen 5 5600X - €249</li>
+                            <li>AMD Ryzen 7 5700G - €299</li>
+                            <li>AMD Ryzen 7 5700X - €279</li>
+                            <li>AMD Ryzen 7 5800X - €349</li>
+                            <li>AMD Ryzen 9 5900X - €449</li>
+                            <li>AMD Ryzen 9 5950X - €549</li>
+                        </ul>
+                        <h4>AMD Ryzen - Serie 7000</h4>
+                        <ul class="card-list">
+                            <li>AMD Ryzen 3 7100 - €129</li>
+                            <li>AMD Ryzen 5 7600 - €229</li>
+                            <li>AMD Ryzen 5 7600X - €279</li>
+                            <li>AMD Ryzen 7 7700 - €309</li>
+                            <li>AMD Ryzen 7 7700X - €369</li>
+                            <li>AMD Ryzen 7 7700X3D - €399</li>
+                            <li>AMD Ryzen 7 7800X3D - €429</li>
+                            <li>AMD Ryzen 9 7900 - €419</li>
+                            <li>AMD Ryzen 9 7900X - €479</li>
+                            <li>AMD Ryzen 9 7900X3D - €559</li>
+                            <li>AMD Ryzen 9 7950X - €599</li>
+                            <li>AMD Ryzen 9 7950X3D - €699</li>
+                        </ul>
+                        <h4>AMD Ryzen - Serie 9000</h4>
+                        <ul class="card-list">
+                            <li>AMD Ryzen 5 9600X - €299</li>
+                            <li>AMD Ryzen 7 9700X - €399</li>
+                            <li>AMD Ryzen 7 9700X3D - €449</li>
+                            <li>AMD Ryzen 9 9900X - €499</li>
+                            <li>AMD Ryzen 9 9900X3D - €549</li>
+                            <li>AMD Ryzen 9 9950X - €699</li>
+                        </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- GRAPHIC CARDS CARD -->
+                <div class="card">
+                    <div class="card-header" onclick="toggleCard(event)">
+                        <div class="card-title-section">
+                            <h3>Graphic Cards</h3>
+                            <p>GPU NVIDIA RTX e AMD Radeon RX per gaming e workstation.</p>
+                        </div>
+                        <span class="card-toggle">▼</span>
+                    </div>
+                    <div class="card-content">
+                        <div class="content-container">
+                            <div class="content-column">
+                                <h4>NVIDIA GeForce</h4>
+                                <ul class="card-list">
+                                    <li>GTX 1650 - €149</li>
+                                    <li>GTX 1660 - €179</li>
+                                    <li>GTX 1660 Super - €199</li>
+                                    <li>GTX 1660 Ti - €219</li>
+                                    <li>RTX 2060 - €229</li>
+                                    <li>RTX 2070 - €299</li>
+                                    <li>RTX 2080 - €379</li>
+                                    <li>RTX 3050 - €249</li>
+                                    <li>RTX 3060 - €299</li>
+                                    <li>RTX 3060 Ti - €349</li>
+                                    <li>RTX 3070 - €399</li>
+                                    <li>RTX 3070 Ti - €449</li>
+                                    <li>RTX 3080 - €499</li>
+                                    <li>RTX 3080 Ti - €599</li>
+                                    <li>RTX 3090 - €699</li>
+                                    <li>RTX 3090 Ti - €799</li>
+                                    <li>RTX 4050 - €249</li>
+                                    <li>RTX 4060 - €279</li>
+                                    <li>RTX 4060 Ti - €349</li>
+                                    <li>RTX 4070 - €499</li>
+                                    <li>RTX 4070 Super - €549</li>
+                                    <li>RTX 4070 Ti - €649</li>
+                                    <li>RTX 4080 - €999</li>
+                                    <li>RTX 4080 Super - €1099</li>
+                                    <li>RTX 4090 - €1799</li>
+                                    <li>RTX 4090 D - €1999</li>
+                                    <li>RTX 5070 - €549</li>
+                                    <li>RTX 5070 Ti - €749</li>
+                                    <li>RTX 5080 - €999</li>
+                                    <li>RTX 5090 - €1999</li>
+                                </ul>
+                            </div>
+                            <div class="content-column">
+                                <h4>AMD Radeon RX</h4>
+                                <ul class="card-list">
+                                    <li>RX 550 - €99</li>
+                                    <li>RX 560 - €119</li>
+                                    <li>RX 570 - €139</li>
+                                    <li>RX 580 - €159</li>
+                                    <li>RX 5500 XT - €179</li>
+                                    <li>RX 5600 XT - €199</li>
+                                    <li>RX 5700 - €229</li>
+                                    <li>RX 5700 XT - €259</li>
+                                    <li>RX 6500 XT - €199</li>
+                                    <li>RX 6600 - €229</li>
+                                    <li>RX 6600 XT - €259</li>
+                                    <li>RX 6700 - €299</li>
+                                    <li>RX 6700 XT - €349</li>
+                                    <li>RX 6750 XT - €379</li>
+                                    <li>RX 6800 - €449</li>
+                                    <li>RX 6800 XT - €499</li>
+                                    <li>RX 6900 XT - €599</li>
+                                    <li>RX 7600 - €189</li>
+                                    <li>RX 7700 - €249</li>
+                                    <li>RX 7700 XT - €299</li>
+                                    <li>RX 7800 XT - €399</li>
+                                    <li>RX 7900 GRE - €499</li>
+                                    <li>RX 7900 XT - €649</li>
+                                    <li>RX 7900 XTX - €799</li>
+                                    <li>RX 8700 XT - €349</li>
+                                    <li>RX 8800 XT - €499</li>
+                                    <li>RX 8900 XT - €649</li>
+                                    <li>RX 8900 XTX - €799</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- SSD CARD -->
+                <div class="card">
+                    <div class="card-header" onclick="toggleCard(event)">
+                        <div class="card-title-section">
+                            <h3>SSD</h3>
+                            <p>Storage NVMe M.2 e SATA per ogni esigenza.</p>
+                        </div>
+                        <span class="card-toggle">▼</span>
+                    </div>
+                    <div class="card-content">
+                        <div class="content-container">
+                            <div class="content-column">
+                                <h4>NVMe M.2</h4>
+                                <ul class="card-list">
+                                    <li>Samsung 990 Pro 2TB - €199</li>
+                                    <li>WD Black SN850X 2TB - €189</li>
+                                    <li>Corsair MP600 Core XT 2TB - €159</li>
+                                    <li>ADATA XPG S70 2TB - €149</li>
+                                    <li>Kingston Fury Beast 2TB - €139</li>
+                                </ul>
+                            </div>
+                            <div class="content-column">
+                                <h4>SATA</h4>
+                                <ul class="card-list">
+                                    <li>Samsung 870 QVO 1TB - €89</li>
+                                    <li>Crucial MX500 1TB - €79</li>
+                                    <li>Kingston A400 1TB - €69</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- CPU COOLER CARD -->
+                <div class="card">
+                    <div class="card-header" onclick="toggleCard(event)">
+                        <div class="card-title-section">
+                            <h3>CPU Cooler</h3>
+                            <p>Raffreddamento Liquid e Air Cooling ad alte prestazioni.</p>
+                        </div>
+                        <span class="card-toggle">▼</span>
+                    </div>
+                    <div class="card-content">
+                        <div class="content-container">
+                            <div class="content-column">
+                                <h4>Liquid Cooling</h4>
+                                <ul class="card-list">
+                                    <li>NZXT Kraken Z73 - €279</li>
+                                    <li>Corsair H150i Elite Capellix - €249</li>
+                                    <li>ASUS ROG Ryujin II 360 - €299</li>
+                                </ul>
+                            </div>
+                            <div class="content-column">
+                                <h4>Air Cooling</h4>
+                                <ul class="card-list">
+                                    <li>Noctua NH-D15 - €89</li>
+                                    <li>be quiet! Dark Rock Pro 4 - €79</li>
+                                    <li>Thermalright Peerless Assassin - €59</li>
+                                    <li>Scythe Fuma 2 - €69</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- RAM CARD -->
+                <div class="card">
+                    <div class="card-header" onclick="toggleCard(event)">
+                        <div class="card-title-section">
+                            <h3>RAM</h3>
+                            <p>Memoria DDR5 e DDR4 32GB per performance massime.</p>
+                        </div>
+                        <span class="card-toggle">▼</span>
+                    </div>
+                    <div class="card-content">
+                        <div class="content-container">
+                            <div class="content-column">
+                                <h4>DDR5</h4>
+                                <ul class="card-list">
+                                    <li>Corsair Dominator Platinum 32GB - €249</li>
+                                    <li>G.Skill Trident Z5 32GB - €229</li>
+                                    <li>Kingston Fury Beast 32GB - €199</li>
+                                    <li>ADATA XPG Lian XL 32GB - €189</li>
+                                </ul>
+                            </div>
+                            <div class="content-column">
+                                <h4>DDR4</h4>
+                                <ul class="card-list">
+                                    <li>Corsair Vengeance RGB 32GB - €129</li>
+                                    <li>G.Skill Trident Z Royal 32GB - €119</li>
+                                    <li>Kingston HyperX Predator 32GB - €109</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- MOTHERBOARD CARD -->
+                <div class="card">
+                    <div class="card-header" onclick="toggleCard(event)">
+                        <div class="card-title-section">
+                            <h3>Motherboard</h3>
+                            <p>Socket Intel 1700 e AMD AM5 per compatibilità totale.</p>
+                        </div>
+                        <span class="card-toggle">▼</span>
+                    </div>
+                    <div class="card-content">
+                        <div class="content-container">
+                            <div class="content-column">
+                                <h4>Intel Socket 1700</h4>
+                                <ul class="card-list">
+                                    <li>ASUS ROG Strix Z790-E - €389</li>
+                                    <li>MSI MPG Z790 Edge WiFi - €349</li>
+                                    <li>Gigabyte Z790 Master - €299</li>
+                                </ul>
+                            </div>
+                            <div class="content-column">
+                                <h4>AMD Socket AM5</h4>
+                                <ul class="card-list">
+                                    <li>ASUS ROG Strix X870-E - €449</li>
+                                    <li>MSI MPG B850E Edge WiFi - €379</li>
+                                    <li>Gigabyte X870E Master - €349</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- CASE CARD -->
+                <div class="card">
+                    <div class="card-header" onclick="toggleCard(event)">
+                        <div class="card-title-section">
+                            <h3>Case</h3>
+                            <p>Mid-Tower e Full-Tower con airflow ottimale.</p>
+                        </div>
+                        <span class="card-toggle">▼</span>
+                    </div>
+                    <div class="card-content">
+                        <div class="content-container">
+                            <div class="content-column">
+                                <h4>Mid-Tower</h4>
+                                <ul class="card-list">
+                                    <li>NZXT H710 Flow - €139</li>
+                                    <li>Corsair 4000D Airflow - €99</li>
+                                    <li>Lian Li LANCOOL 205 - €79</li>
+                                    <li>be quiet! Pure Base 500DX - €89</li>
+                                </ul>
+                            </div>
+                            <div class="content-column">
+                                <h4>Full-Tower</h4>
+                                <ul class="card-list">
+                                    <li>NZXT H7 Flow RGB - €169</li>
+                                    <li>Corsair Crystal Series 680X - €189</li>
+                                    <li>Lian Li O11 Dynamic XL - €179</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- POWER SUPPLY CARD -->
+                <div class="card">
+                    <div class="card-header" onclick="toggleCard(event)">
+                        <div class="card-title-section">
+                            <h3>Alimentatori</h3>
+                            <p>PSU 500W-1300W con certificazione Gold e Platinum.</p>
+                        </div>
+                        <span class="card-toggle">▼</span>
+                    </div>
+                    <div class="card-content">
+                        <div class="content-container">
+                            <div class="content-column">
+                                <h4>500W - 850W</h4>
+                                <ul class="card-list">
+                                    <li>Corsair CV550 550W - €59</li>
+                                    <li>Seasonic Core GM 550W - €69</li>
+                                    <li>Thermaltake Smart Pro 550W - €64</li>
+                                    <li>EVGA 600 GQ 600W - €74</li>
+                                    <li>MSI MAG A550GL 550W - €69</li>
+                                    <li>Corsair RM750x 750W Gold - €99</li>
+                                    <li>Seasonic Focus GX 750W Gold - €109</li>
+                                    <li>EVGA SuperNOVA 750 GT 750W Gold - €104</li>
+                                </ul>
+                            </div>
+                            <div class="content-column">
+                                <h4>1000W+</h4>
+                                <ul class="card-list">
+                                    <li>Asus ROG Strix 850W Gold - €149</li>
+                                    <li>be quiet! Pure Power 12M 850W Gold - €139</li>
+                                    <li>Corsair HX1000i 1000W Platinum - €199</li>
+                                    <li>Seasonic Prime PX 1000 1000W - €180</li>
+                                    <li>EVGA SuperNOVA 1300 P2 1300W Platinum - €229</li>
+                                    <li>MSI MPower A1200W 1200W Platinum - €239</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                    </div>
+                </div>
+                <!-- CARRELLO LATERALE -->
+                <div class="cart-sidebar">
+                    <div class="cart-title">🛒 Carrello</div>
+                    <div class="cart-items" id="cartItems">
+                        <div class="cart-empty">Il carrello è vuoto</div>
+                    </div>
+                    <div class="cart-prices">
+                        <div class="price-row">
+                            <span>Subtotale:</span>
+                            <span id="subtotal">€ 0,00</span>
+                        </div>
+                        <div class="price-row total">
+                            <span>Totale:</span>
+                            <span id="total">€ 0,00</span>
+                        </div>
+                        <div class="price-row vat">
+                            <span>Totale + IVA 22%:</span>
+                            <span id="totalVat">€ 0,00</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <section class="offers-section" id="offerte">
+        <h2 class="offers-title">Offerte Speciali</h2>
+        <div class="offers-grid">
+            <div class="offer-card">
+                <img src="../Images/PcStarterGaming.jpg" alt="PC Starter" class="offer-image">
+                <div class="offer-body">
+                    <div class="offer-title">PC Starter Gaming</div>
+                    <div class="offer-price">€ 799</div>
+                    <ul class="offer-list">
+                        <li>CPU: AMD Ryzen 5 5600</li>
+                        <li>GPU: NVIDIA RTX 3060</li>
+                        <li>RAM: 16 GB DDR4</li>
+                        <li>SSD: 1 TB NVMe.</li>
+                        <li>PSU: 650W Gold</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="offer-card">
+                <img src="../Images/PcCreatorPro.jpg" alt="PC Creator" class="offer-image">
+                <div class="offer-body">
+                    <div class="offer-title">PC Creator Pro</div>
+                    <div class="offer-price">€ 1299</div>
+                    <ul class="offer-list">
+                        <li>CPU: Intel Core i7 13700</li>
+                        <li>GPU: NVIDIA RTX 4070</li>
+                        <li>RAM: 32 GB DDR5</li>
+                        <li>Storage: 1 TB NVMe + 2 TB HDD</li>
+                        <li>Raffreddamento: AIO 240mm</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="offer-card">
+                <img src="../Images/high_build.jpg" alt="PC Ultra" class="offer-image">
+                <div class="offer-body">
+                    <div class="offer-title">PC Ultra Performance</div>
+                    <div class="offer-price">€ 1999</div>
+                    <ul class="offer-list">
+                        <li>CPU: AMD Ryzen 9 7900X</li>
+                        <li>GPU: NVIDIA RTX 4080</li>
+                        <li>RAM: 32 GB DDR5</li>
+                        <li>SSD: 2 TB NVMe</li>
+                        <li>PSU: 850W Gold</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="single-buy-section" id="acquista-singolarmente">
+        <h2 class="single-buy-title">Acquista singolarmente</h2>
+        <div class="single-buy-groups" id="singleBuyGroups"></div>
+    </section>
+
+    <script>
+        // Dati del carrello
+        let cart = [];
+
+        const buildHeader = document.getElementById('buildHeader');
+        const buildContent = document.getElementById('buildContent');
+        const toggleIcon = document.getElementById('toggleIcon');
+        const navSearch = document.getElementById('navSearch');
+        const productCards = document.querySelectorAll('.card');
+        const navMenuBtn = document.getElementById('navMenuBtn');
+        const sideMenu = document.getElementById('sideMenu');
+        const sideMenuOverlay = document.getElementById('sideMenuOverlay');
+        const sideMenuLinks = sideMenu.querySelectorAll('a');
+
+        buildHeader.addEventListener('click', function() {
+            buildContent.classList.toggle('active');
+            toggleIcon.classList.toggle('active');
+        });
+
+        function openSideMenu() {
+            sideMenu.classList.add('open');
+            sideMenuOverlay.classList.add('open');
+        }
+
+        function closeSideMenu() {
+            sideMenu.classList.remove('open');
+            sideMenuOverlay.classList.remove('open');
+        }
+
+        navMenuBtn.addEventListener('click', function() {
+            if (sideMenu.classList.contains('open')) {
+                closeSideMenu();
+            } else {
+                openSideMenu();
+            }
+        });
+
+        sideMenuOverlay.addEventListener('click', closeSideMenu);
+        sideMenuLinks.forEach(link => link.addEventListener('click', closeSideMenu));
+
+        function filterProducts(query) {
+            const term = query.trim().toLowerCase();
+            if (term) {
+                if (!buildContent.classList.contains('active')) {
+                    buildContent.classList.add('active');
+                    toggleIcon.classList.add('active');
+                }
+            }
+
+            productCards.forEach(card => {
+                const items = card.querySelectorAll('.card-list li');
+                if (items.length === 0) {
+                    return;
+                }
+
+                let hasMatch = false;
+                items.forEach(item => {
+                    const text = item.textContent.toLowerCase();
+                    const match = term === '' || text.includes(term);
+                    item.style.display = match ? '' : 'none';
+                    if (match) {
+                        hasMatch = true;
+                    }
+                });
+
+                card.style.display = term === '' || hasMatch ? '' : 'none';
+            });
+        }
+
+        navSearch.addEventListener('input', function() {
+            filterProducts(navSearch.value);
+        });
+
+        // Carousel funzionalità
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.carousel-slide');
+        const dots = document.querySelectorAll('.carousel-dot');
+        const totalSlides = slides.length;
+
+        function showSlide(n) {
+            slides.forEach(slide => slide.classList.remove('active'));
+            dots.forEach(dot => dot.classList.remove('filling'));
+            slides[n].classList.add('active');
+            dots[n].classList.add('filling');
+        }
+
+        function goToSlide(n) {
+            currentSlide = n;
+            showSlide(currentSlide);
+        }
+
+        function nextSlide() {
+            currentSlide = (currentSlide + 1) % totalSlides;
+            showSlide(currentSlide);
+        }
+
+        // Mostra il primo slide e inizia l'animazione
+        showSlide(0);
+
+        // Cambio automatico ogni 10 secondi
+        setInterval(nextSlide, 10000);
+
+        // Toggle per le singole card
+        function toggleCard(event) {
+            const cardHeader = event.currentTarget;
+            const card = cardHeader.closest('.card');
+            const cardContent = card.querySelector('.card-content');
+            const cardToggle = cardHeader.querySelector('.card-toggle');
+
+            cardContent.classList.toggle('active');
+            cardToggle.classList.toggle('active');
+        }
+
+        function selectComponentForCard(card, name, price) {
+            const title = card.querySelector('.card-title-section h3');
+            const description = card.querySelector('.card-title-section p');
+
+            if (!card.dataset.defaultTitle) {
+                card.dataset.defaultTitle = title.textContent.trim();
+            }
+
+            if (!card.dataset.defaultDescription) {
+                card.dataset.defaultDescription = description.textContent.trim();
+            }
+
+            const numericPrice = Number(price);
+            const formattedPrice = Number.isFinite(numericPrice) ? numericPrice.toFixed(2) : price;
+
+            title.textContent = name;
+            description.textContent = formattedPrice ? `Prezzo: €${formattedPrice}` : 'Componente selezionato';
+        }
+
+        function clearCardSelection(card) {
+            const title = card.querySelector('.card-title-section h3');
+            const description = card.querySelector('.card-title-section p');
+
+            if (card.dataset.defaultTitle) {
+                title.textContent = card.dataset.defaultTitle;
+            }
+
+            if (card.dataset.defaultDescription) {
+                description.textContent = card.dataset.defaultDescription;
+            }
+        }
+
+        function stringToColor(input) {
+            let hash = 0;
+            for (let i = 0; i < input.length; i++) {
+                hash = input.charCodeAt(i) + ((hash << 5) - hash);
+            }
+            const hue = Math.abs(hash) % 360;
+            return `hsl(${hue}, 70%, 40%)`;
+        }
+
+        function getComponentInitials(name) {
+            const parts = name.split(/\s+/).filter(Boolean);
+            const initials = parts.slice(0, 2).map(part => part[0]).join('');
+            return initials.toUpperCase() || 'PC';
+        }
+
+        function createComponentImageData(name, category) {
+            const initials = getComponentInitials(name);
+            const color = stringToColor(`${category}-${name}`);
+            const svg = `
+                <svg xmlns="http://www.w3.org/2000/svg" width="360" height="220" viewBox="0 0 360 220">
+                    <defs>
+                        <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
+                            <stop offset="0%" stop-color="${color}" stop-opacity="0.95" />
+                            <stop offset="100%" stop-color="#111" />
+                        </linearGradient>
+                    </defs>
+                    <rect width="360" height="220" rx="18" fill="url(#g)" />
+                    <text x="50%" y="48%" text-anchor="middle" font-family="Poppins, Arial, sans-serif" font-size="28" fill="#fff" font-weight="700">${initials}</text>
+                    <text x="50%" y="68%" text-anchor="middle" font-family="Poppins, Arial, sans-serif" font-size="14" fill="rgba(255,255,255,0.85)">${category}</text>
+                </svg>
+            `;
+            return `data:image/svg+xml;utf8,${encodeURIComponent(svg)}`;
+        }
+
+        function buildSingleBuyCards() {
+            const singleBuyGroups = document.getElementById('singleBuyGroups');
+            if (!singleBuyGroups) {
+                return;
+            }
+
+            singleBuyGroups.innerHTML = '';
+
+            const buildCards = document.querySelectorAll('.build-cards-section .card');
+            buildCards.forEach(card => {
+                const titleEl = card.querySelector('.card-title-section h3');
+                const descEl = card.querySelector('.card-title-section p');
+                const cardTitle = titleEl ? titleEl.textContent.trim() : 'Componente';
+                const cardDescription = descEl ? descEl.textContent.trim() : 'Descrizione non disponibile.';
+
+                const groupWrapper = document.createElement('div');
+                groupWrapper.className = 'single-buy-group';
+                groupWrapper.innerHTML = `<div class="single-buy-group-title">${cardTitle}</div>`;
+
+                const groupGrid = document.createElement('div');
+                groupGrid.className = 'single-buy-grid';
+
+                const groups = card.querySelectorAll('.card-content .processors-column, .card-content .content-column');
+                groups.forEach(group => {
+                    const groupTitleEl = group.querySelector('h4');
+                    const groupTitle = groupTitleEl ? groupTitleEl.textContent.trim() : 'Selezione';
+                    const items = group.querySelectorAll('li.card-list-item');
+
+                    items.forEach(item => {
+                        const name = item.dataset.name || item.textContent.trim();
+                        const price = item.dataset.price || '';
+                        const imageSrc = createComponentImageData(name, cardTitle);
+
+                        const cardEl = document.createElement('div');
+                        cardEl.className = 'single-buy-card';
+                        cardEl.innerHTML = `
+                            <img class="single-buy-image" src="${imageSrc}" alt="${name}">
+                            <h3>${name}</h3>
+                            <p>${cardDescription}</p>
+                            <ul class="single-buy-specs">
+                                <li><strong>Categoria:</strong> ${cardTitle}</li>
+                                <li><strong>Gruppo:</strong> ${groupTitle}</li>
+                                <li><strong>Prezzo:</strong> € ${price}</li>
+                            </ul>
+                        `;
+                        groupGrid.appendChild(cardEl);
+                    });
+                });
+
+                groupWrapper.appendChild(groupGrid);
+                singleBuyGroups.appendChild(groupWrapper);
+            });
+        }
+
+        // Aggiungi al carrello
+        function addToCart(name, price, groupKey) {
+            const item = {
+                id: Math.random(),
+                name: name,
+                price: parseFloat(price),
+                group: groupKey
+            };
+
+            if (groupKey) {
+                cart = cart.filter(existing => existing.group !== groupKey);
+            }
+
+            cart.push(item);
+            updateCart();
+        }
+
+        // Rimuovi dal carrello
+        function removeFromCart(itemId) {
+            const itemToRemove = cart.find(item => item.id === itemId);
+            cart = cart.filter(item => item.id !== itemId);
+            if (itemToRemove && itemToRemove.group) {
+                const card = document.querySelector(`.card[data-group="${itemToRemove.group}"]`);
+                if (card) {
+                    clearCardSelection(card);
+                }
+            }
+            updateCart();
+        }
+
+        // Aggiorna il carrello
+        function updateCart() {
+            const cartItems = document.getElementById('cartItems');
+            const subtotal = document.getElementById('subtotal');
+            const total = document.getElementById('total');
+            const totalVat = document.getElementById('totalVat');
+
+            if (cart.length === 0) {
+                cartItems.innerHTML = '<div class="cart-empty">Il carrello è vuoto</div>';
+            } else {
+                cartItems.innerHTML = cart.map(item => `
+                    <div class="cart-item">
+                        <span class="cart-item-name">${item.name}</span>
+                        <span class="cart-item-price">€ ${item.price.toFixed(2)}</span>
+                        <button class="cart-item-remove" onclick="removeFromCart(${item.id})">✕</button>
+                    </div>
+                `).join('');
+            }
+
+            // Calcola i totali
+            const subtotalAmount = cart.reduce((sum, item) => sum + item.price, 0);
+            const vatAmount = subtotalAmount * 0.22;
+            const totalAmount = subtotalAmount + vatAmount;
+
+            subtotal.textContent = `€ ${subtotalAmount.toFixed(2)}`;
+            total.textContent = `€ ${subtotalAmount.toFixed(2)}`;
+            totalVat.textContent = `€ ${totalAmount.toFixed(2)}`;
+        }
+
+        // Inizializza le liste con pulsanti
+        document.addEventListener('DOMContentLoaded', function() {
+            // Converti le liste normali in liste con pulsanti
+            const lists = document.querySelectorAll('.card-list');
+            lists.forEach(list => {
+                const items = list.querySelectorAll('li');
+                items.forEach(li => {
+                    const text = li.textContent.trim();
+                    // Estrai il nome completo e il prezzo dal nuovo formato
+                    const match = text.match(/^(.*?)\s*-\s*€?\s*(.+)$/);
+                    if (match) {
+                        const card = li.closest('.card');
+                        const name = match[1]; // Es: "Intel Core i3 10100"
+                        const priceRaw = match[2];
+                        // Pulisci il prezzo: estrai solo i numeri e il punto decimale
+                        const cleanPrice = priceRaw.replace(/[^0-9.]/g, '');
+                        li.innerHTML = `<span class="component-name">${name}</span><button class="add-to-cart-btn" type="button">€${cleanPrice}</button>`;
+                        li.classList.add('card-list-item');
+                        li.dataset.name = name;
+                        li.dataset.price = cleanPrice;
+
+                        if (card && !card.dataset.group) {
+                            const title = card.querySelector('.card-title-section h3');
+                            card.dataset.group = title ? title.textContent.trim() : `group-${Math.random()}`;
+                        }
+
+                        const addButton = li.querySelector('.add-to-cart-btn');
+                        addButton.addEventListener('click', function(event) {
+                            event.stopPropagation();
+                            const groupKey = card ? card.dataset.group : undefined;
+                            addToCart(name, cleanPrice, groupKey);
+                            if (card) {
+                                selectComponentForCard(card, name, cleanPrice);
+                            }
+                        });
+
+                        li.addEventListener('click', function() {
+                            if (card) {
+                                selectComponentForCard(card, name, cleanPrice);
+                            }
+                        });
+                    }
+                });
+            });
+
+            buildSingleBuyCards();
+        });
+    </script>
+</body>
+</html>
